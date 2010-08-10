@@ -1,0 +1,4 @@
+Generate custom reports from Project Hamster database(s).
+
+Dependencies:
+- python-sqlite
