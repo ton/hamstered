@@ -10,7 +10,32 @@
   <body>
   <h1>Uren overzicht (<xsl:value-of select="@start_date"/> - <xsl:value-of select="@end_date"/>)</h1>
   <xsl:for-each select="day">
-  <h2><xsl:value-of select="@date"/></h2>
+      <h2>
+          <xsl:choose>
+              <xsl:when test="@week_day=0">
+                  maandag
+              </xsl:when>
+              <xsl:when test="@week_day=1">
+                  dinsdag
+              </xsl:when>
+              <xsl:when test="@week_day=2">
+                  woensdag
+              </xsl:when>
+              <xsl:when test="@week_day=3">
+                  donderdag
+              </xsl:when>
+              <xsl:when test="@week_day=4">
+                  vrijdag
+              </xsl:when>
+              <xsl:when test="@week_day=5">
+                  zaterdag
+              </xsl:when>
+              <xsl:when test="@week_day=6">
+                  zondag
+              </xsl:when>
+          </xsl:choose>
+          <xsl:value-of select="@date"/>
+      </h2>
   <table width="40%">
     <tr>
       <td>Activiteit</td>

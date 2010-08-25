@@ -61,7 +61,7 @@ class Hamstered(object):
                 if last_date is not None:
                     f.write('</day>\n')
                 last_date = day[0]
-                f.write('<day date="' + date.strftime(last_date, '%d-%m') + '" weekday="' + str(last_date.weekday()) + '">\n')
+                f.write('<day date="' + date.strftime(last_date, '%d-%m') + '" week_day="' + str(last_date.weekday()) + '">\n')
 
             for activity in day[1]:
                 f.write('  <activity name="' + activity[0] + '" start_time="' + activity[1] + '" end_time="' + activity[2] + '" duration="' + str(activity[3]) + '" />\n')
