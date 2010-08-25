@@ -44,7 +44,7 @@ class Hamstered(object):
                 for row in rows:
                     start_time = datetime.strptime(row['start_time'], '%Y-%m-%d %H:%M:%S')
                     end_time = datetime.strptime(row['end_time'], '%Y-%m-%d %H:%M:%S')
-                    day = date.strftime(start_time.date(), '%d-%m-%Y')
+                    day = start_time.date() #date.strftime(start_time.date(), '%d-%m-%Y')
                     if not day in days:
                         days[day] = [] if not self.travel_hours else [(self.travel_description, '', '', float(self.travel_hours))]
                     days[day].append((row['name'], datetime.strftime(start_time, '%H:%M'), datetime.strftime(end_time, '%H:%M'), self.format_duration(start_time, end_time)))
@@ -54,18 +54,20 @@ class Hamstered(object):
 
         f = open(self.output_file, 'w')
         f.write('<?xml-stylesheet type="text/xsl" href="hamstered.xsl"?>\n')
+        f.write('<report start_date="' + date.strftime(self.start_date, '%d-%m-%Y') + '" end_date="' + date.strftime(self.end_date, '%d-%m-%Y') + '">\n')
         last_date = None
         for day in sorted(days.items()):
             if (day[0] != last_date):
                 if last_date is not None:
                     f.write('</day>\n')
                 last_date = day[0]
-                f.write('<day date="' + last_date + '">\n')
+                f.write('<day date="' + date.strftime(last_date, '%d-%m') + '" weekday="' + str(last_date.weekday()) + '">\n')
 
             for activity in day[1]:
                 f.write('  <activity name="' + activity[0] + '" start_time="' + activity[1] + '" end_time="' + activity[2] + '" duration="' + str(activity[3]) + '" />\n')
         if last_date is not None:
             f.write('</day>\n')
+        f.write('</report>\n')
 
 if __name__ == '__main__':
     parser = optparse.OptionParser(description = 'Generate an XML report from (multiple) hamster database over a given date range.',
