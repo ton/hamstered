@@ -29,7 +29,7 @@ class Hamstered(object):
         return round((end_time - start_time).seconds / 900.) * 0.25
 
     def generate(self):
-        # activities is a mapping from a start date to a list of tuples containing an activity name, a start time, an end time, and a duration in fractional hours
+        # days is a mapping from a start date to a list of tuples containing an activity name, a start time, an end time, and a duration in fractional hours
         days = {}
         for database in self.databases:
             try:
@@ -44,7 +44,7 @@ class Hamstered(object):
                 for row in rows:
                     start_time = datetime.strptime(row['start_time'], '%Y-%m-%d %H:%M:%S')
                     end_time = datetime.strptime(row['end_time'], '%Y-%m-%d %H:%M:%S')
-                    day = start_time.date() #date.strftime(start_time.date(), '%d-%m-%Y')
+                    day = start_time.date()
                     if not day in days:
                         days[day] = [] if not self.travel_hours else [(self.travel_description, '', '', float(self.travel_hours))]
                     days[day].append((row['name'], datetime.strftime(start_time, '%H:%M'), datetime.strftime(end_time, '%H:%M'), self.format_duration(start_time, end_time)))
