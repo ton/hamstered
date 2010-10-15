@@ -29,8 +29,18 @@ td {
     border-color: black;
     border-style: solid;
     padding: 3px;
+    white-space: nowrap;
 }
 
 tr:first-child {
     font-weight: bold;
+}
+
+.daybox {
+    float: left;
+    margin: 10px;
+}
+
+.pagebreak {
+    page-break-after: always;
 }
